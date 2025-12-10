@@ -106,9 +106,8 @@ Created a report focusing on the following KPIs:
 
 ## 👤 Author
 
-**[Your Name]**
-* [LinkedIn Profile](https://linkedin.com/in/yourprofile)
-* [Portfolio/Website](https://yourwebsite.com)
+**Emilio Pinedo**
+* [LinkedIn Profile](https://linkedin.com/in/emilio-pinedo)
 
 ---
 *If you find this project useful, please give it a ⭐!*
