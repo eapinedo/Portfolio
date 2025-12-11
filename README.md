@@ -50,7 +50,7 @@ The dataset consists of 1K+ records of Amazon products, including pricing, ratin
 
 ### 1. Data Cleaning & Preprocessing (Python)
 Raw data from e-commerce is rarely clean. The following steps were taken:
-* **Currency Cleaning:** Removed currency symbols (`₹`, `$`) and commas from price columns to convert them to numeric types.
+* **Currency Cleaning:** Removed currency symbols (`$`) and commas from price columns to convert them to numeric types.
 * **Category Parsing:** The `category` column contained hierarchical strings. These were split to extract the `Main Category` and `Sub-Category`.
 * **Type Conversion:** Converted `discount_percentage` and `rating_count` to integers/floats.
 * **Handling Nulls:** Imputed missing rating values with the category mean.
