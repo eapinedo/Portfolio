@@ -108,6 +108,3 @@ Created a report focusing on the following KPIs:
 
 **Emilio Pinedo**
 * [LinkedIn Profile](https://linkedin.com/in/emilio-pinedo)
-
----
-*If you find this project useful, please give it a ⭐!*
