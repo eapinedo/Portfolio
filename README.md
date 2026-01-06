@@ -68,7 +68,7 @@ Built a dynamic report focusing on 3 Core Views:
 
 ## 📊 Dashboard Snapshot
 
-![Dashboard Placeholder](https://github.com/eapinedo/Portfolio/blob/main/Dashboard.png)
+![Dashboard Placeholder]()
 
 **Key Insights:**
 1.  **The "Sweet Spot":** Products discounted between **40-50%** see the highest volume of engagement. Deep discounts (>70%) often correlate with lower ratings (perceived low quality).
