@@ -1,7 +1,7 @@
 # 🛒 Amazon Sales & Sentiment Analytics
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
-![SQL Server](https://img.shields.io/badge/SQL%20Server-2019-red)
+![SQL Server](https://img.shields.io/badge/SQL%20Server-2025-red)
 ![Power BI](https://img.shields.io/badge/Power%20BI-Desktop-yellow)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 
@@ -13,11 +13,11 @@ By simulating a real-world data pipeline, this project involves **Extracting, Tr
 
 ## 🎯 Business Objective
 
-The goal of this analysis is to answer key business questions:
-* How does discount depth correlate with customer ratings?
-* Which product categories generate the most engagement?
-* What is the relationship between actual price and discounted price across categories?
-* **Sentiment Analysis:** Understanding customer satisfaction through rating distributions.
+The goal is to solve key e-commerce challenges:
+* **Pricing Strategy:** How does discount depth (High vs. Low) impact customer engagement?
+* **Category Dominance:** Which categories drive the most revenue vs. volume?
+* **Customer Sentiment:** Do expensive products actually get better ratings?
+* **Personalization:** Building a content-based recommendation engine to improve cross-selling.
 
 ## 📂 Dataset
 
@@ -35,74 +35,68 @@ The dataset consists of 1K+ records of Amazon products, including pricing, ratin
 | `rating_count` | Total number of ratings |
 | `about_product` | Product description |
 | `user_id` | ID of the user who wrote the review |
-| `review_content` | Long-form textual review |
 
 *Data Source: Official Amazon Website Data (Simulated/Scraped)*
 
 ## 🛠️ Tools & Technologies
 
 * **Python (Pandas, NumPy, Seaborn):** Used for Data Cleaning, Preprocessing, and Exploratory Data Analysis (EDA).
-* **SQL Server:** Used as the data warehouse to run complex queries and aggregations.
-* **Power BI:** Used to build the interactive dashboard and report.
-* **DAX:** Used for calculating measures like *Average Rating* and *Total Revenue Estimates*.
+* **SQL Server (T-SQL):** Data warehousing using CTEs, Window Functions, and Ranking algorithms.
+* **Power BI:** Dashboarding with DAX measures, Data Modeling, and Custom Visualization.
 
 ## ⚙️ Methodology & Steps
 
-### 1. Data Cleaning & Preprocessing (Python)
-Raw data from e-commerce is rarely clean. The following steps were taken:
-* **Currency Cleaning:** Removed currency symbols (`$`) and commas from price columns to convert them to numeric types.
+### 1. Data Cleaning & ETL (Python)
+Raw e-commerce data is messy. The following steps were taken:
+* **Regex Cleaning:** Removed currency symbols (`$`) and commas from price columns to convert them to numeric types.
 * **Category Parsing:** The `category` column contained hierarchical strings. These were split to extract the `Main Category` and `Sub-Category`.
 * **Type Conversion:** Converted `discount_percentage` and `rating_count` to integers/floats.
-* **Handling Nulls:** Imputed missing rating values with the category mean.
+* **Error Handling:** Fixed data corruption in the `rating` column (e.g., removing `|` characters).
 
-### 2. Exploratory Data Analysis (EDA)
-Performed univariate and bivariate analysis to understand distributions:
-* Visualized the distribution of Ratings (mostly skewed towards 4.0+).
-* Analyzed the correlation between *Discount Percentage* and *Rating Count*.
+### 2. Advanced SQL Analysis
+Moving beyond simple aggregations, I used **T-SQL Window Functions**:
+* **`DENSE_RANK()`**: To identify the Top 3 Best-Selling products per category.
+* **`LAG()`**: To analyze price gaps between product tiers.
+* **`AVG() OVER()`**: To compare individual product prices against their category average.
+* **CTEs (Common Table Expressions):** Used to clean data on-the-fly for reporting.
 
-### 3. SQL Data Management
-* Loaded the cleaned dataframe into **SQL Server**.
-* Wrote SQL queries to extract KPIs such as "Top 10 Products by Discount" and "Average Rating per Category."
-
-### 4. Dashboarding (Power BI)
-Created a report focusing on the following KPIs:
-* **Avg Discount %**: 46% (Example)
-* **Total Reviews Processed**: 24K+
-* **Category Performance**: Bar charts showing volume by category.
+### 3. Interactive Dashboard (Power BI)
+Built a dynamic report focusing on 3 Core Views:
+* **Financial View:** Donut Chart showing *Revenue Share by Main Category*.
+* **Strategic View:** Scatter Chart showing the *Discount Sweet Spot* (Correlation between Discount % and Review Volume).
+* **Customer View:** Clustered Column Chart analyzing *Rating Distributions* across Budget vs. Premium segments.
 
 ## 📊 Dashboard Snapshot
 
-*(Place a screenshot of your Power BI dashboard here. Example:)*
+![Dashboard Placeholder](https://github.com/eapinedo/Portfolio/blob/main/Dashboard.png)
 
-![Dashboard Placeholder](https://via.placeholder.com/800x400?text=Power+BI+Dashboard+Screenshot)
-
-**Key Insights derived:**
-1.  **Discount Sensitivity:** Products with discounts between 30-50% tend to have the highest volume of reviews, suggesting this is the "sweet spot" for conversion.
-2.  **Category Dominance:** "Electronics" and "Cables" dominate the dataset in terms of sheer volume, but "Home Appliances" have slightly higher average ratings.
-3.  **Pricing Strategy:** There is a weak positive correlation between higher actual prices and lower ratings, suggesting customers are more critical of expensive items.
+**Key Insights:**
+1.  **The "Sweet Spot":** Products discounted between **40-50%** see the highest volume of engagement. Deep discounts (>70%) often correlate with lower ratings (perceived low quality).
+2.  **Revenue Drivers:** While "Electronics" has the highest volume, "Home & Kitchen" generates more consistent revenue due to higher average unit prices.
+3.  **Price Sensitivity:** There is no strong correlation between high price and high rating, suggesting Amazon customers value "utility" over "premium status."
 
 ## 🚀 How to Run This Project
 
 1.  **Clone the Repository**
     ```bash
-    git clone [https://github.com/yourusername/amazon-analytics-project.git](https://github.com/yourusername/amazon-analytics-project.git)
+    git clone [https://github.com/eapinedo/Portfolio.git](https://github.com/eapinedo/Portfolio.git)
     ```
 2.  **Install Python Dependencies**
     ```bash
     pip install pandas numpy matplotlib seaborn sqlalchemy
     ```
-3.  **Run the ETL Script**
-    * Open `src/data_cleaning.ipynb` to clean the `amazon.csv` file.
-    * This will export a `clean_amazon_data.csv`.
+3.  **Run the Analysis**
+    * Open `src/python_script.ipynb`.
+    * Run the cells to generate the clean CSV.
 4.  **SQL Setup**
-    * Import `clean_amazon_data.csv` into your SQL Server instance.
-    * Run queries found in `sql_queries.sql` to verify data.
+    * Import `amazon.csv` into SQL Server.
+    * Execute `sql/sales_queries.sql` to generate insights.
 5.  **View Dashboard**
-    * Open `dashboard/Amazon_Analytics.pbix` in Power BI Desktop.
+    * Open `dashboard/Amazon Sales Dashboard.pbix` in Power BI Desktop.
 
 ## 🔮 Future Scope
-* **NLP Sentiment Analysis:** Implement NLTK or TextBlob to classify `review_content` into Positive/Negative/Neutral tags.
-* **Recommendation System:** Build a content-based filtering system using `product_name` and `about_product` to recommend similar items to users.
+* **Cloud Deployment:** Automate the ETL pipeline using **Apache Airflow** or **Azure Data Factory**.
+* **Sentiment Classification:** Use **BERT** or **VADER** to classify review text as Positive/Negative to augment the star rating.
 
 ## 👤 Author
 
